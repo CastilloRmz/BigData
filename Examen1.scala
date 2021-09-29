@@ -19,7 +19,7 @@ df_netflix.head(5)
 df_netlfix.describe().show
 
 7. Create a new data frame with a new column called "HV Ratio" which is the relationship between the price in the "High" column versus the "Volume" column of shares traded for a day. Hint is an operation.
-val df_netflix2 = df_netflix.withColumn("HV Ratio", df("High")/df("Volume"))
+val df_netflix2 = df_netflix.withColumn("HV Ratio", df_netflix("High")/df_netflix("Volume"))
 
 8. What day had the highest peak in the “Open” column?
 df_netflix.select(mean("Open")).show()
