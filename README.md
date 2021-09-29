@@ -1,22 +1,22 @@
-# Pr-ctica-Evaluatoria---Unidad-1
-Practica para evaluar la unidad 1
-1.
-import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.SparkSession
+# Pr-ctica-Evaluatoria---Unidad-1<br>
+Practica para evaluar la unidad 1<br>
+1.<br>
+import org.apache.spark.sql.SparkSession<br>
+import org.apache.spark.sql.SparkSession<br>
 
-2. 
+2. <br>
 val session = SparkSession.builder().getOrCreate
 session: org.apache.spark.sql.SparkSession = org.apache.spark.sql.SparkSession@1be3e952<br>
 
-3.
+3.<br>
 val df_netflix = session.read.option("header", "true").option("inferSchema", true).csv("Netflix_2011_2016.csv")
 df_netflix: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 5 more fields]<br>
 
-4.
+4.<br>
 df_netflix.columns
 res0: Array[String] = Array(Date, Open, High, Low, Close, Volume, Adj Close)<br>
 
-5.
+5.<br>
 df_netflix.printSchema()
 root
  |-- Date: timestamp (nullable = true)<br>
@@ -27,15 +27,15 @@ root
  |-- Volume: integer (nullable = true)<br>
  |-- Adj Close: double (nullable = true)<br>
 
-6.
+6.<br>
 df_netflix.head(5)
 res2: Array[org.apache.spark.sql.Row] = Array([2011-10-24 00:00:00.0,119.100002,120.28000300000001,115.100004,118.839996,120460200,16.977142], [2011-10-25 00:00:00.0,74.899999,79.390001,74.249997,77.370002,315541800,11.052857000000001], [2011-10-26 00:00:00.0,78.73,81.420001,75.399997,79.400002,148733900,11.342857], [2011-10-27 00:00:00.0,82.179998,82.71999699999999,79.249998,80.86000200000001,71190000,11.551428999999999], [2011-10-28 00:00:00.0,80.280002,84.660002,79.599999,84.14000300000001,57769600,12.02])<br>
 
-7.
+7.<br>
 val df_netflix2 = df_netflix.withColumn("HV Ratio", df_netflix("High")/df_netflix("Volume"))
 df_netflix2: org.apache.spark.sql.DataFrame = [Date: timestamp, Open: double ... 6 more fields]<br>
 
-8.
+8.<br>
 df_netflix.select(mean("Open")).show()<br>
 +------------------+<br>
 |         avg(Open)|<br>
@@ -43,7 +43,7 @@ df_netflix.select(mean("Open")).show()<br>
 |230.39351086656092|<br>
 +------------------+<br>
 
-9.
+9.<br>
 df_netflix.select(mean("Close")).show()<br>
 +----------------+<br>
 |      avg(Close)|<br>
@@ -59,7 +59,7 @@ df_netflix.select(max("Volume")).show()<br>
 |  315541800|<br>
 +-----------+<br>
 
-10.
+10.<br>
 df_netflix.select(min("Volume")).show()<br>
 +-----------+<br>
 |min(Volume)|<br>
@@ -67,15 +67,15 @@ df_netflix.select(min("Volume")).show()<br>
 |    3531300|<br>
 +-----------+<br>
 
-a.
+a.<br>
 val Day = df_netflix.where($"Close" < 600).count()<br>
 Day: Long = 1218
 
-b.
+b.<br>
 val Day = df_netflix.where($"High" > 500).count().toFloat<br>
 Day: Float = 62.0
 
-c.
+c.<br>
 df_netflix.select(corr("High", "Volume")).show()<br>
 +--------------------+<br>
 |  corr(High, Volume)|<br>
@@ -83,7 +83,7 @@ df_netflix.select(corr("High", "Volume")).show()<br>
 |-0.20960233287942157|<br>
 +--------------------+<br>
 
-d.
+d.<br>
 df_netflix.groupBy(year($"Date")).max("High").show()<br>
 +----------+------------------+    <br>                                             
 |year(Date)|         max(High)|<br>
@@ -96,7 +96,7 @@ df_netflix.groupBy(year($"Date")).max("High").show()<br>
 |      2011|120.28000300000001|<br>
 +----------+------------------+<br>
 
-e.
+e.<br>
 val df_netflix3 = df_netflix.groupBy(year($"Date"), month($"Date")).mean("Close"). toDF("Year","Month","Mean")
 df_netflix3: org.apache.spark.sql.DataFrame = [Year: int, Month: int ... 1 more field]
 
